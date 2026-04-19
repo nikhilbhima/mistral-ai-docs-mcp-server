@@ -94,10 +94,43 @@ main.main { flex: 1; }
 }
 .topbar-links a { display: inline-flex; align-items: center; gap: 6px; transition: color .15s; }
 .topbar-links a:hover { color: var(--ink); }
-.topbar-links .star-badge {
-  height: 26px;
+.star-btn {
   display: inline-flex;
   align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  letter-spacing: -0.005em;
+  transition: background .15s, border-color .15s, color .15s;
+  line-height: 1;
+}
+.star-btn:hover {
+  background: var(--surface-2);
+  border-color: #3a3a42;
+  color: var(--ink);
+}
+.star-btn svg {
+  width: 14px;
+  height: 14px;
+  color: var(--ink-soft);
+}
+.star-btn .star-label { color: var(--ink); }
+.star-btn .star-divider {
+  width: 1px;
+  height: 12px;
+  background: var(--border-strong);
+  margin: 0 2px;
+}
+.star-btn .star-count {
+  color: var(--ink-dim);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
 .github-btn {

@@ -1,5 +1,6 @@
 import { CopyButton } from './_components/CopyButton';
 import { ClientTabs, type ClientTab } from './_components/ClientTabs';
+import { GithubStarButton } from './_components/GithubStar';
 
 const MCP_URL = 'https://mistral-docs-mcp.vercel.app/mcp';
 const REPO = 'nikhilbhima/mistral-ai-docs-mcp-server';
@@ -130,8 +131,6 @@ const XIcon = () => (
 );
 
 export default function Page() {
-  const starBadge = `https://img.shields.io/github/stars/${REPO}?style=social`;
-
   return (
     <div className="page">
       {/* ---------- Top bar ---------- */}
@@ -143,16 +142,7 @@ export default function Page() {
             <span>Mistral Docs MCP</span>
           </a>
           <nav className="topbar-links" aria-label="Primary">
-            <a
-              href={`${REPO_URL}/stargazers`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub stars"
-              className="star-badge"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={starBadge} alt="GitHub stars" style={{ display: 'block' }} />
-            </a>
+            <GithubStarButton />
             <a
               href={REPO_URL}
               target="_blank"
