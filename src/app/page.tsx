@@ -138,7 +138,7 @@ export default function Page() {
         <div className="wrap topbar-row">
           <a href="#top" className="brand" aria-label="Mistral Docs MCP home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="" />
+            <img src="/logo.png" alt="" width="26" height="26" />
             <span>Mistral Docs MCP</span>
           </a>
           <nav className="topbar-links" aria-label="Primary">
@@ -169,7 +169,14 @@ export default function Page() {
           <div className="wrap">
             <div className="hero-inner">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="" className="hero-logo" />
+              <img
+                src="/logo.png"
+                alt=""
+                width="96"
+                height="96"
+                className="hero-logo"
+                fetchPriority="high"
+              />
               <h1>Mistral AI Docs MCP</h1>
               <p className="hero-sub">
                 Unofficial. Not affiliated with Mistral AI.
