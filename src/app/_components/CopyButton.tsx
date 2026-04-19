@@ -16,7 +16,7 @@ export function CopyButton({ value, label = 'Copy' }: CopyButtonProps) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     } catch {
-      // silently ignore — browsers without clipboard permission
+      // silently ignore: browsers without clipboard permission
     }
   };
 

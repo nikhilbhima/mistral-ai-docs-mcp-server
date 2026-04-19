@@ -63,14 +63,14 @@ const platforms: {
   {
     name: 'Windsurf',
     tag: 'IDE',
-    note: 'Same shape as Cursor — add to mcp_config.json.',
+    note: 'Same shape as Cursor. Add to mcp_config.json.',
     code: CURSOR_JSON,
     lang: 'json',
   },
   {
     name: 'VS Code + Copilot',
     tag: 'IDE',
-    note: 'Command palette → MCP: Add Server → HTTP → paste.',
+    note: 'Command palette. MCP: Add Server. HTTP. Paste.',
     code: MCP_URL,
   },
   {
@@ -96,20 +96,20 @@ const platforms: {
   {
     name: 'Mistral Le Chat',
     tag: 'WEB',
-    note: 'Settings → Custom connectors. Paste the URL.',
+    note: 'Settings. Custom connectors. Paste the URL.',
     code: MCP_URL,
   },
   {
     name: 'Mistral Vibe',
     tag: 'CLI',
-    note: 'Edit ~/.vibe/config.toml. Restart with `vibe`.',
+    note: 'Edit ~/.vibe/config.toml. Restart with vibe.',
     code: VIBE_TOML,
     lang: 'toml',
   },
   {
     name: 'ChatGPT',
     tag: 'WEB',
-    note: 'Developer mode → Connectors → Create. URL only, auth none.',
+    note: 'Developer mode. Connectors. Create. URL only, auth none.',
     code: MCP_URL,
   },
 ];
@@ -118,11 +118,6 @@ const queries: { q: string; note: string; tool: string }[] = [
   {
     q: 'How do I call the Mistral API to do OCR on a PDF? Show me a working Python snippet.',
     note: 'Pulls the exact code block from the Basic OCR docs, mistral-ocr-latest model and all.',
-    tool: 'search_mistral_docs',
-  },
-  {
-    q: 'Which Mistral models support vision, and what is each one\u2019s context window?',
-    note: 'Returns a grounded table straight from the models overview page.',
     tool: 'search_mistral_docs',
   },
   {
@@ -135,42 +130,7 @@ const queries: { q: string; note: string; tool: string }[] = [
     note: 'Newer model, weak in base training data. Forces a retrieval.',
     tool: 'search_mistral_docs',
   },
-  {
-    q: 'How do I prepare a dataset to fine-tune a classifier on La Plateforme?',
-    note: 'JSONL format, schema, and the exact API call.',
-    tool: 'search_mistral_docs',
-  },
 ];
-
-function MonospaceDiagram() {
-  return (
-    <div className="diagram">
-      <div className="diagram-head">
-        <span className="dots">
-          <i />
-          <i />
-          <i />
-        </span>
-        <span>pipeline.txt</span>
-        <span />
-      </div>
-      <pre>
-{`  `}<span className="label">docs.mistral.ai/llms-full.txt</span>{`
-     │
-     │  `}<span className="muted">HEAD every 6h · ETag check · deploy hook on change</span>{`
-     ▼
-  `}<span className="label">build step</span>{`  parse → MiniSearch BM25 → virtual filesystem
-     │
-     │  `}<span className="muted">baked into the deploy · loaded at module scope on cold start</span>{`
-     ▼
-  `}<span className="label">/mcp</span>{` ──►  `}<span className="accent">search_mistral_docs</span>{`  +  `}<span className="accent">query_mistral_docs_filesystem</span>{`
-           │
-           └─ `}<span className="muted">JSON-RPC over Streamable HTTP · any MCP client</span>{`
-`}
-      </pre>
-    </div>
-  );
-}
 
 function PlatformCard({ name, tag, note, code, lang }: (typeof platforms)[number]) {
   return (
@@ -180,7 +140,11 @@ function PlatformCard({ name, tag, note, code, lang }: (typeof platforms)[number
           {name}
           <span className="tag">{tag}</span>
         </span>
-        {lang ? <span className="tag" style={{ color: 'var(--ink-dim)' }}>{lang}</span> : null}
+        {lang ? (
+          <span className="tag" style={{ color: 'var(--ink-dim)' }}>
+            {lang}
+          </span>
+        ) : null}
       </div>
       <div className="platform-body">
         <p className="platform-note">{note}</p>
@@ -214,25 +178,16 @@ export default function Page() {
       <header className="topbar">
         <div className="wrap topbar-row">
           <a href="#top" className="brand" aria-label="Mistral Docs MCP home">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.png" alt="" />
             <span>Mistral Docs MCP</span>
           </a>
           <nav className="topbar-links">
-            <a
-              href={`${REPO_URL}/blob/main/docs/design.md`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hide-sm"
-            >
-              Design
+            <a href="#connect" className="hide-sm">
+              Connect
             </a>
-            <a
-              href="/api/health"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hide-sm"
-            >
-              Health
+            <a href="#try" className="hide-sm">
+              Try it
             </a>
             <a
               href={REPO_URL}
@@ -271,10 +226,24 @@ export default function Page() {
               Mistral docs, <span className="serif">in every agent.</span>
             </h1>
             <p className="lede">
-              An MCP server that gives coding agents instant, authoritative
-              access to Mistral AI&rsquo;s developer documentation and full API
-              reference. <b>One public URL. No auth. No install.</b> 139 pages
-              baked into the deploy, refreshed every six hours.
+              An MCP server that gives coding agents authoritative access to
+              Mistral AI&rsquo;s developer documentation and full API reference.
+              Two tools: <b>search</b> and a read-only <b>filesystem grep</b>.
+              Content comes from Mistral&rsquo;s own{' '}
+              <a
+                href="https://docs.mistral.ai/llms-full.txt"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: 'var(--ink)',
+                  textDecoration: 'underline',
+                  textUnderlineOffset: 3,
+                  textDecorationColor: 'var(--border-strong)',
+                }}
+              >
+                llms-full.txt
+              </a>
+              , refreshed every six hours. One URL, no auth, no install.
             </p>
 
             <div className="url-card">
@@ -305,79 +274,6 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ---------- What it does ---------- */}
-        <section id="about">
-          <div className="wrap">
-            <div className="kicker">The idea</div>
-            <h2 className="section-h">
-              Your agent, grounded in{' '}
-              <span className="serif">real Mistral docs.</span>
-            </h2>
-            <p className="lede">
-              Coding agents guess when you ask about recent flags, endpoints, or
-              models. This server gives them a tool that returns Mistral&rsquo;s
-              own text, verbatim, so the agent cites rather than fabricates.
-              Content comes from{' '}
-              <a
-                href="https://docs.mistral.ai/llms-full.txt"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: 'var(--ink)', textDecoration: 'underline', textUnderlineOffset: 3, textDecorationColor: 'var(--border-strong)' }}
-              >
-                docs.mistral.ai/llms-full.txt
-              </a>{' '}
-              — the bundle Mistral publishes for exactly this purpose.
-            </p>
-
-            <div className="tool-grid">
-              <div className="tool-card">
-                <div className="tool-name">search_mistral_docs(query, limit?)</div>
-                <p>
-                  BM25 lexical search with fuzzy matching across every page.
-                  Strong on concept queries (&ldquo;how does RAG work&rdquo;),
-                  forgiving on typos, returns snippets plus canonical URLs.
-                </p>
-                <div className="tool-hint">
-                  › How do I use Mistral&rsquo;s vision models?
-                </div>
-              </div>
-              <div className="tool-card">
-                <div className="tool-name">query_mistral_docs_filesystem(command)</div>
-                <p>
-                  Read-only shell over a virtualized filesystem of the parsed
-                  docs. Supports <code>rg</code>, <code>find</code>,{' '}
-                  <code>cat</code>, <code>ls</code>. Strong for exact strings —
-                  flag names, field keys, endpoint paths.
-                </p>
-                <div className="tool-hint">
-                  › rg response_format /api
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ---------- How it works ---------- */}
-        <section id="how">
-          <div className="wrap">
-            <div className="kicker">How it works</div>
-            <h2 className="section-h">
-              One endpoint. <span className="serif">One fresh build.</span>
-            </h2>
-            <p className="lede">
-              A cron job checks Mistral&rsquo;s ETag every six hours. On change,
-              it POSTs a Vercel Deploy Hook. The new build fetches{' '}
-              <code style={{ fontFamily: 'var(--mono)', fontSize: 13.5 }}>
-                llms-full.txt
-              </code>
-              , parses it, builds a MiniSearch index, and bakes the whole thing
-              into the deploy artifact. No blob store. No database. No stale
-              content.
-            </p>
-            <MonospaceDiagram />
-          </div>
-        </section>
-
         {/* ---------- Connect ---------- */}
         <section id="connect">
           <div className="wrap">
@@ -387,8 +283,7 @@ export default function Page() {
               <span className="serif">any MCP-capable client.</span>
             </h2>
             <p className="lede">
-              Zero API key. Zero install. Here&rsquo;s the exact snippet for the
-              common ones.
+              Exact snippet for each of the common ones.
             </p>
 
             <div className="platforms">
@@ -399,18 +294,17 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ---------- Test drive ---------- */}
-        <section id="test">
+        {/* ---------- Try it ---------- */}
+        <section id="try">
           <div className="wrap">
-            <div className="kicker">Test drive</div>
+            <div className="kicker">Try it</div>
             <h2 className="section-h">
-              Good prompts <span className="serif">that force a retrieval.</span>
+              Good prompts{' '}
+              <span className="serif">that force a retrieval.</span>
             </h2>
             <p className="lede">
-              Ask these verbatim. Don&rsquo;t mention the MCP — a well-wired
-              client will reach for it on its own. If the model answers without
-              touching a tool, the question probably wasn&rsquo;t
-              Mistral-specific enough.
+              Ask these verbatim. Don&rsquo;t mention the MCP, a well-wired
+              client reaches for it on its own.
             </p>
 
             <ul className="queries">
@@ -418,22 +312,13 @@ export default function Page() {
                 <li key={i} className="query">
                   <p className="q-body">&ldquo;{q.q}&rdquo;</p>
                   <div className="q-note">
-                    <span className="tool">{q.tool}</span> — {q.note}
+                    <span className="tool">{q.tool}</span> · {q.note}
                   </div>
                 </li>
               ))}
             </ul>
-          </div>
-        </section>
 
-        {/* ---------- Demo ---------- */}
-        <section id="demo">
-          <div className="wrap">
-            <div className="kicker">Demo</div>
-            <h2 className="section-h">
-              A minute <span className="serif">with the MCP in action.</span>
-            </h2>
-            <div className="video-wrap">
+            <div className="video-wrap" style={{ marginTop: 28 }}>
               <div className="video-head">
                 <span>demo.mp4</span>
                 <span>01:00</span>
@@ -441,7 +326,9 @@ export default function Page() {
               <div className="video-frame">
                 <div className="video-placeholder">
                   <span className="soon">Video · Soon</span>
-                  <span>A walkthrough lands here when the recording&rsquo;s up.</span>
+                  <span>
+                    A walkthrough lands here when the recording&rsquo;s up.
+                  </span>
                 </div>
               </div>
             </div>
