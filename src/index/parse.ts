@@ -7,23 +7,38 @@ export interface Page {
 }
 
 export function parsePages(raw: string): Page[] {
-  const chunks = raw.split(/(?=^# )/m).filter((c) => c.startsWith('# '));
+  const lines = raw.split('\n');
   const pages: Page[] = [];
 
-  for (const chunk of chunks) {
-    const lines = chunk.split('\n');
-    const title = lines[0].slice(2).trim();
+  const isPageBoundary = (i: number): boolean => {
+    if (!lines[i]?.startsWith('# ')) return false;
+    let j = i + 1;
+    while (j < lines.length && lines[j].trim() === '') j++;
+    return j < lines.length && lines[j].startsWith('Source: ');
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    if (!isPageBoundary(i)) continue;
+
+    const title = lines[i].slice(2).trim();
     if (!title) continue;
 
-    const sourceIdx = lines.findIndex((l) => l.startsWith('Source: '));
-    if (sourceIdx === -1) continue;
-    const sourceUrl = lines[sourceIdx].slice('Source: '.length).trim();
+    let j = i + 1;
+    while (lines[j].trim() === '') j++;
+    const sourceUrl = lines[j].slice('Source: '.length).trim();
     if (!sourceUrl) continue;
 
-    const body = lines.slice(sourceIdx + 1).join('\n').trim();
+    let k = j + 1;
+    const bodyLines: string[] = [];
+    while (k < lines.length && !isPageBoundary(k)) {
+      bodyLines.push(lines[k]);
+      k++;
+    }
+    const content = bodyLines.join('\n').trim();
     const path = urlToPath(sourceUrl);
     const category: Page['category'] = path.startsWith('/api/') ? 'api' : 'docs';
-    pages.push({ path, title, sourceUrl, content: body, category });
+    pages.push({ path, title, sourceUrl, content, category });
+    i = k - 1;
   }
 
   return pages;

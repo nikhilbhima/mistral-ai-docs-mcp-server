@@ -42,4 +42,32 @@ describe('parsePages', () => {
     const trimmed = sample.trimEnd();
     expect(parsePages(trimmed).length).toBeGreaterThan(0);
   });
+
+  it('does not split pages at # comments inside code fences', () => {
+    const withCodeFence = [
+      '# Real Page',
+      'Source: https://docs.mistral.ai/docs/real',
+      '',
+      'Intro paragraph.',
+      '',
+      '```bash',
+      '# this is a shell comment, not a page title',
+      'echo hello',
+      '```',
+      '',
+      'Trailing paragraph.',
+      '',
+      '# Next Real Page',
+      'Source: https://docs.mistral.ai/docs/next',
+      '',
+      'Next body.',
+    ].join('\n');
+
+    const pages = parsePages(withCodeFence);
+    expect(pages).toHaveLength(2);
+    expect(pages[0].title).toBe('Real Page');
+    expect(pages[0].content).toContain('shell comment');
+    expect(pages[0].content).toContain('Trailing paragraph');
+    expect(pages[1].title).toBe('Next Real Page');
+  });
 });
