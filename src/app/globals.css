@@ -53,11 +53,11 @@ img, svg { display: block; max-width: 100%; }
 }
 .wrap {
   width: 100%;
-  max-width: 1040px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 20px;
 }
-@media (max-width: 560px) { .wrap { padding: 0 20px; } }
+@media (max-width: 560px) { .wrap { padding: 0 18px; } }
 main.main { flex: 1; }
 
 /* ---------- Top bar ---------- */
