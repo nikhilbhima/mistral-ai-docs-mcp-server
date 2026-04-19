@@ -157,6 +157,7 @@ section + section { border-top: 1px solid var(--border); }
   font-family: var(--serif);
   font-style: italic;
   font-weight: 400;
+  color: var(--accent);
 }
 .lede {
   color: var(--ink-soft);
