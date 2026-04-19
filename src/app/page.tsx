@@ -111,11 +111,11 @@ const clientTabs: ClientTab[] = [
 ];
 
 const queries: string[] = [
-  'How do I call the Mistral API to do OCR on a PDF? Show me a Python snippet.',
-  'Show me every endpoint that accepts a response_format parameter.',
-  'What is Voxtral and which audio formats does it accept?',
-  'Which Mistral models support vision input, and what is each one\u2019s context window?',
-  'How do I prepare a dataset to fine-tune a classifier on La Plateforme?',
+  'Show me every API endpoint that accepts a response_format parameter.',
+  'Compare Codestral and Devstral: what are the exact model IDs and when should I use each?',
+  'What is Voxtral? Which audio formats does it accept, and what languages does it support?',
+  'Give me the exact JSONL dataset format for fine-tuning a sentiment classifier with Classifier Factory.',
+  'Which of Mistral\u2019s connectors (code interpreter, websearch, image generation, document library) can I use with Agents via the API?',
 ];
 
 const GithubIcon = () => (
@@ -182,10 +182,7 @@ export default function Page() {
         <section id="connect">
           <div className="wrap">
             <div className="kicker">Connect an MCP client</div>
-            <h2 className="section-h">
-              Paste the URL{' '}
-              <span className="serif">into any MCP client.</span>
-            </h2>
+            <h2 className="section-h">Paste the URL into any MCP client.</h2>
             <p className="lede">
               Exact snippet for each of the common ones.
             </p>
@@ -198,10 +195,7 @@ export default function Page() {
           <div className="wrap">
             <div className="two-col">
               <div>
-                <h2 className="section-h">
-                  Your AI tools, meet{' '}
-                  <span className="serif">the whole Mistral docs.</span>
-                </h2>
+                <h2 className="section-h">Your AI tools, meet the whole Mistral docs.</h2>
                 <p className="lede">
                   Once wired up, your agent reaches for the MCP on its own for
                   anything Mistral-specific. No need to mention the tool by
