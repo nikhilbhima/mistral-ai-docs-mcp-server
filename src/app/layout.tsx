@@ -1,7 +1,20 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+import { Instrument_Serif } from 'next/font/google';
+import './globals.css';
+
+const serif = Instrument_Serif({
+  weight: '400',
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  variable: '--font-instrument-serif',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://mistral-docs-mcp.vercel.app'),
   title: 'Mistral Docs MCP',
   description:
     'Unofficial MCP server for Mistral AI developer documentation and full API reference. One public URL, no auth, works in every MCP client.',
@@ -11,7 +24,7 @@ export const metadata: Metadata = {
       'Unofficial MCP server for Mistral AI developer documentation and full API reference.',
     url: 'https://mistral-docs-mcp.vercel.app',
     siteName: 'Mistral Docs MCP',
-    images: [{ url: '/logo.png', width: 128, height: 128 }],
+    images: [{ url: '/logo.png', width: 512, height: 512 }],
     type: 'website',
   },
   twitter: {
@@ -25,8 +38,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body style={{ margin: 0, background: '#0a0a0a' }}>{children}</body>
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${GeistMono.variable} ${serif.variable}`}
+    >
+      <body>{children}</body>
     </html>
   );
 }
