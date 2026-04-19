@@ -4,8 +4,7 @@ node_modules
 out
 dist
 src/generated
-.env
-.env.local
+.env*
 *.log
 .DS_Store
 coverage
