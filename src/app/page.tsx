@@ -205,10 +205,6 @@ export default function Page() {
                 <span><b>139</b> pages</span>
                 <span className="sep">·</span>
                 <span>refreshed every <b>6h</b></span>
-                <span className="sep">·</span>
-                <span><b>MIT</b></span>
-                <span className="sep">·</span>
-                <span>zero analytics</span>
               </div>
             </div>
           </div>
