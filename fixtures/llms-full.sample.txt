@@ -1,0 +1,20 @@
+# Quickstart
+Source: https://docs.mistral.ai/docs/getting-started/quickstart
+
+Get started with Mistral AI in five minutes. Create an account, grab an API
+key, and run your first chat completion.
+
+# List Models
+Source: https://docs.mistral.ai/api/#tag/list_models_v1_models_get
+
+get /v1/models
+
+Returns available models.
+
+# Vision
+Source: https://docs.mistral.ai/docs/capabilities/vision
+
+Multimodal models analyze images alongside text for OCR and chart reading.
+
+# Empty Page
+Source: https://docs.mistral.ai/docs/guides/empty
