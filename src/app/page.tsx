@@ -109,22 +109,12 @@ const clientTabs: ClientTab[] = [
   },
 ];
 
-const queries: { q: string; note: string; tool: string }[] = [
-  {
-    q: 'How do I call the Mistral API to do OCR on a PDF? Show me a working Python snippet.',
-    note: 'Pulls the exact code block from the Basic OCR docs, mistral-ocr-latest model and all.',
-    tool: 'search_mistral_docs',
-  },
-  {
-    q: 'Show me every endpoint that accepts a response_format parameter.',
-    note: 'Exact-match grep across all 139 pages via the filesystem tool.',
-    tool: 'query_mistral_docs_filesystem',
-  },
-  {
-    q: 'What is Voxtral and which audio formats does it accept?',
-    note: 'Newer model, weak in base training data. Forces a retrieval.',
-    tool: 'search_mistral_docs',
-  },
+const queries: string[] = [
+  'How do I call the Mistral API to do OCR on a PDF? Show me a Python snippet.',
+  'Show me every endpoint that accepts a response_format parameter.',
+  'What is Voxtral and which audio formats does it accept?',
+  'Which Mistral models support vision input, and what is each one\u2019s context window?',
+  'How do I prepare a dataset to fine-tune a classifier on La Plateforme?',
 ];
 
 const GithubIcon = () => (
@@ -136,12 +126,6 @@ const GithubIcon = () => (
 const XIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <polyline points="20 6 9 17 4 12" />
   </svg>
 );
 
@@ -204,105 +188,45 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ---------- Connect (two-col) ---------- */}
+        {/* ---------- Connect ---------- */}
         <section id="connect">
+          <div className="wrap">
+            <div className="kicker">Connect an MCP client</div>
+            <h2 className="section-h">
+              Paste the URL{' '}
+              <span className="serif">into any MCP client.</span>
+            </h2>
+            <p className="lede">
+              Exact snippet for each of the common ones.
+            </p>
+            <ClientTabs tabs={clientTabs} />
+          </div>
+        </section>
+
+        {/* ---------- Example prompts ---------- */}
+        <section id="try">
           <div className="wrap">
             <div className="two-col">
               <div>
-                <div className="kicker">Connect</div>
                 <h2 className="section-h">
                   Your AI tools, meet{' '}
                   <span className="serif">the whole Mistral docs.</span>
                 </h2>
                 <p className="lede">
-                  Paste the URL into any MCP-compatible client. Your agent gets
-                  instant access to every page Mistral publishes in{' '}
-                  <code style={{ fontFamily: 'var(--mono)', fontSize: 13.5, color: 'var(--ink)' }}>
-                    llms-full.txt
-                  </code>
-                  , verbatim. No key, no install, no glue code.
+                  Once wired up, your agent reaches for the MCP on its own for
+                  anything Mistral-specific. No need to mention the tool by
+                  name.
                 </p>
-
-                <ul className="feature-list">
-                  <li>
-                    <span className="mark"><CheckIcon /></span>
-                    <div>
-                      <b>Accurate.</b>
-                      <p>Mistral&rsquo;s own docs text, never paraphrased.</p>
-                    </div>
-                  </li>
-                  <li>
-                    <span className="mark"><CheckIcon /></span>
-                    <div>
-                      <b>Fast.</b>
-                      <p>Index baked into the deploy, loaded in memory. Sub-second responses.</p>
-                    </div>
-                  </li>
-                  <li>
-                    <span className="mark"><CheckIcon /></span>
-                    <div>
-                      <b>Fresh.</b>
-                      <p>Cron checks the upstream ETag every six hours and rebuilds on change.</p>
-                    </div>
-                  </li>
-                  <li>
-                    <span className="mark"><CheckIcon /></span>
-                    <div>
-                      <b>Two tools.</b>
-                      <p>
-                        <code style={{ fontFamily: 'var(--mono)', fontSize: 12.5, color: 'var(--ink-soft)' }}>search_mistral_docs</code>{' '}
-                        for concepts,{' '}
-                        <code style={{ fontFamily: 'var(--mono)', fontSize: 12.5, color: 'var(--ink-soft)' }}>query_mistral_docs_filesystem</code>{' '}
-                        for exact-match grep.
-                      </p>
-                    </div>
-                  </li>
-                </ul>
               </div>
-
               <div>
-                <ClientTabs tabs={clientTabs} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ---------- Try it ---------- */}
-        <section id="try">
-          <div className="wrap">
-            <div className="kicker">Try it</div>
-            <h2 className="section-h">
-              Good prompts{' '}
-              <span className="serif">that force a retrieval.</span>
-            </h2>
-            <p className="lede">
-              Ask these verbatim in any wired-up client. Don&rsquo;t mention the
-              MCP, a well-configured agent reaches for it on its own.
-            </p>
-
-            <ul className="queries">
-              {queries.map((q, i) => (
-                <li key={i} className="query">
-                  <p className="q-body">{q.q}</p>
-                  <div className="q-note">
-                    <span className="tool">{q.tool}</span> · {q.note}
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <div className="video-wrap">
-              <div className="video-head">
-                <span>demo.mp4</span>
-                <span>01:00</span>
-              </div>
-              <div className="video-frame">
-                <div className="video-placeholder">
-                  <span className="soon">Video · Soon</span>
-                  <span>
-                    A walkthrough lands here when the recording&rsquo;s up.
-                  </span>
-                </div>
+                <p className="queries-intro">
+                  Try asking your AI client:
+                </p>
+                <ul className="queries-plain">
+                  {queries.map((q, i) => (
+                    <li key={i}>&ldquo;{q}&rdquo;</li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
