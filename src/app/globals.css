@@ -103,21 +103,29 @@ main.main { flex: 1; }
 .github-btn {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 6px 11px;
+  gap: 8px;
+  padding: 7px 14px;
   font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ink-soft);
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
-  border-radius: 7px;
-  transition: background .15s, color .15s, border-color .15s;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--accent);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  letter-spacing: -0.005em;
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transition: background .15s, transform .05s, box-shadow .15s;
 }
 .github-btn:hover {
-  background: var(--surface-2);
-  color: var(--ink);
-  border-color: #3a3a42;
+  background: #f0490a;
+  color: #ffffff;
+}
+.github-btn:active {
+  background: #d84309;
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* ---------- Sections ---------- */

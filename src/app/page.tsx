@@ -130,7 +130,7 @@ const XIcon = () => (
 );
 
 export default function Page() {
-  const starBadge = `https://img.shields.io/github/stars/${REPO}?style=flat-square&logo=github&logoColor=a1a1aa&label=&color=1f1f23&labelColor=111113`;
+  const starBadge = `https://img.shields.io/github/stars/${REPO}?style=social`;
 
   return (
     <div className="page">
