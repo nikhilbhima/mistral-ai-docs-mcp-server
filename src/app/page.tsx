@@ -1,4 +1,5 @@
 import { CopyButton } from './_components/CopyButton';
+import { ClientTabs, type ClientTab } from './_components/ClientTabs';
 
 const MCP_URL = 'https://mistral-docs-mcp.vercel.app/mcp';
 const REPO = 'nikhilbhima/mistral-ai-docs-mcp-server';
@@ -34,82 +35,76 @@ name = "mistral-docs"
 transport = "http"
 url = "${MCP_URL}"`;
 
-const platforms: {
-  name: string;
-  tag: string;
-  note: string;
-  code: string;
-  lang?: string;
-}[] = [
+const clientTabs: ClientTab[] = [
   {
-    name: 'Claude Code',
-    tag: 'CLI',
-    note: 'One command. Terminal.',
+    id: 'claude-code',
+    label: 'Claude Code',
+    note: 'One command in your terminal:',
     code: `claude mcp add --transport http mistral-docs ${MCP_URL}`,
   },
   {
-    name: 'Claude Desktop',
-    tag: 'APP',
-    note: 'Settings → Connectors → Add custom connector. Paste the URL.',
+    id: 'claude-desktop',
+    label: 'Claude Desktop',
+    note: 'Settings → Connectors → Add custom connector. Paste the URL:',
     code: MCP_URL,
   },
   {
-    name: 'Cursor',
-    tag: 'IDE',
-    note: 'Add to .cursor/mcp.json, project or global.',
+    id: 'cursor',
+    label: 'Cursor',
+    note: 'Add to .cursor/mcp.json (project or global):',
     code: CURSOR_JSON,
     lang: 'json',
   },
   {
-    name: 'Windsurf',
-    tag: 'IDE',
-    note: 'Same shape as Cursor. Add to mcp_config.json.',
+    id: 'windsurf',
+    label: 'Windsurf',
+    note: 'Same shape as Cursor. Add to mcp_config.json:',
     code: CURSOR_JSON,
     lang: 'json',
   },
   {
-    name: 'VS Code + Copilot',
-    tag: 'IDE',
-    note: 'Command palette. MCP: Add Server. HTTP. Paste.',
+    id: 'vscode',
+    label: 'VS Code',
+    note: 'Command palette → MCP: Add Server → HTTP → paste the URL:',
     code: MCP_URL,
   },
   {
-    name: 'Codex CLI',
-    tag: 'CLI',
-    note: "OpenAI's local coding agent.",
+    id: 'codex',
+    label: 'Codex CLI',
+    note: "OpenAI's local coding agent:",
     code: `codex mcp add mistral-docs --url ${MCP_URL}`,
   },
   {
-    name: 'Gemini CLI',
-    tag: 'CLI',
-    note: 'Add to ~/.gemini/settings.json. Uses mcp-remote bridge.',
+    id: 'gemini',
+    label: 'Gemini CLI',
+    note: 'Add to ~/.gemini/settings.json (uses mcp-remote bridge):',
     code: GEMINI_JSON,
     lang: 'json',
   },
   {
-    name: 'Zed',
-    tag: 'IDE',
-    note: 'Add to settings.json under context_servers.',
+    id: 'zed',
+    label: 'Zed',
+    note: 'Add to settings.json under context_servers:',
     code: ZED_JSON,
     lang: 'json',
   },
   {
-    name: 'Mistral Le Chat',
-    tag: 'WEB',
-    note: 'Settings. Custom connectors. Paste the URL.',
+    id: 'le-chat',
+    label: 'Le Chat',
+    note: 'Settings → Custom connectors. Paste the URL:',
     code: MCP_URL,
   },
   {
-    name: 'Mistral Vibe',
-    tag: 'CLI',
-    note: 'Edit ~/.vibe/config.toml. Restart with vibe.',
+    id: 'vibe',
+    label: 'Mistral Vibe',
+    note: 'Edit ~/.vibe/config.toml, then restart with `vibe`:',
     code: VIBE_TOML,
     lang: 'toml',
   },
   {
-    name: 'ChatGPT',
-    tag: 'WEB',
-    note: 'Developer mode. Connectors. Create. URL only, auth none.',
+    id: 'chatgpt',
+    label: 'ChatGPT',
+    note: 'Developer mode → Connectors → Create. URL only, auth none:',
     code: MCP_URL,
   },
 ];
@@ -132,31 +127,6 @@ const queries: { q: string; note: string; tool: string }[] = [
   },
 ];
 
-function PlatformCard({ name, tag, note, code, lang }: (typeof platforms)[number]) {
-  return (
-    <article className="platform">
-      <div className="platform-head">
-        <span className="platform-name">
-          {name}
-          <span className="tag">{tag}</span>
-        </span>
-        {lang ? (
-          <span className="tag" style={{ color: 'var(--ink-dim)' }}>
-            {lang}
-          </span>
-        ) : null}
-      </div>
-      <div className="platform-body">
-        <p className="platform-note">{note}</p>
-        <div className="code">
-          <pre>{code}</pre>
-          <CopyButton value={code} />
-        </div>
-      </div>
-    </article>
-  );
-}
-
 const GithubIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.26c-3.34.72-4.04-1.41-4.04-1.41-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.81 1.3 3.5.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23.96-.27 1.99-.4 3.02-.4 1.03.01 2.06.14 3.02.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.3c0 .32.22.7.83.58A12.03 12.03 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z" />
@@ -166,6 +136,12 @@ const GithubIcon = () => (
 const XIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <polyline points="20 6 9 17 4 12" />
   </svg>
 );
 
@@ -182,21 +158,7 @@ export default function Page() {
             <img src="/logo.png" alt="" />
             <span>Mistral Docs MCP</span>
           </a>
-          <nav className="topbar-links">
-            <a href="#connect" className="hide-sm">
-              Connect
-            </a>
-            <a href="#try" className="hide-sm">
-              Try it
-            </a>
-            <a
-              href={REPO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
-            >
-              <GithubIcon /> GitHub
-            </a>
+          <nav className="topbar-links" aria-label="Primary">
             <a
               href={`${REPO_URL}/stargazers`}
               target="_blank"
@@ -207,6 +169,14 @@ export default function Page() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={starBadge} alt="GitHub stars" style={{ display: 'block' }} />
             </a>
+            <a
+              href={REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="github-btn"
+            >
+              <GithubIcon /> GitHub
+            </a>
           </nav>
         </div>
       </header>
@@ -215,81 +185,94 @@ export default function Page() {
         {/* ---------- Hero ---------- */}
         <section className="hero">
           <div className="wrap">
-            <div className="hero-top">
+            <div className="hero-inner">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo.png" alt="" className="hero-logo" />
-              <span className="hero-pill">
-                <span className="dot" /> Unofficial · MIT
-              </span>
-            </div>
-            <h1>
-              Mistral docs, <span className="serif">in every agent.</span>
-            </h1>
-            <p className="lede">
-              An MCP server that gives coding agents authoritative access to
-              Mistral AI&rsquo;s developer documentation and full API reference.
-              Two tools: <b>search</b> and a read-only <b>filesystem grep</b>.
-              Content comes from Mistral&rsquo;s own{' '}
-              <a
-                href="https://docs.mistral.ai/llms-full.txt"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: 'var(--ink)',
-                  textDecoration: 'underline',
-                  textUnderlineOffset: 3,
-                  textDecorationColor: 'var(--border-strong)',
-                }}
-              >
-                llms-full.txt
-              </a>
-              , refreshed every six hours. One URL, no auth, no install.
-            </p>
+              <h1>Mistral AI Docs MCP</h1>
+              <p className="hero-sub">
+                Unofficial. Not affiliated with Mistral AI.
+              </p>
 
-            <div className="url-card">
-              <div className="url-card-body">
-                <div className="url-card-label">Paste into your MCP client</div>
-                <div className="url-card-value">{MCP_URL}</div>
+              <div className="url-card">
+                <div className="url-card-body">
+                  <div className="url-card-label">Paste into your MCP client</div>
+                  <div className="url-card-value">{MCP_URL}</div>
+                </div>
+                <CopyButton value={MCP_URL} label="Copy" />
               </div>
-              <CopyButton value={MCP_URL} label="Copy" />
-            </div>
 
-            <div className="meta-row" role="list">
-              <span className="meta-item" role="listitem">
-                <b>139</b> pages
-              </span>
-              <span className="sep">·</span>
-              <span className="meta-item" role="listitem">
-                refreshed every <b>6h</b>
-              </span>
-              <span className="sep">·</span>
-              <span className="meta-item" role="listitem">
-                <b>MIT</b> licensed
-              </span>
-              <span className="sep">·</span>
-              <span className="meta-item" role="listitem">
-                zero analytics
-              </span>
+              <div className="hero-meta">
+                <span><b>139</b> pages</span>
+                <span className="sep">·</span>
+                <span>refreshed every <b>6h</b></span>
+                <span className="sep">·</span>
+                <span><b>MIT</b></span>
+                <span className="sep">·</span>
+                <span>zero analytics</span>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ---------- Connect ---------- */}
+        {/* ---------- Connect (two-col) ---------- */}
         <section id="connect">
           <div className="wrap">
-            <div className="kicker">Connect</div>
-            <h2 className="section-h">
-              Paste the URL into{' '}
-              <span className="serif">any MCP-capable client.</span>
-            </h2>
-            <p className="lede">
-              Exact snippet for each of the common ones.
-            </p>
+            <div className="two-col">
+              <div>
+                <div className="kicker">Connect</div>
+                <h2 className="section-h">
+                  Your AI tools, meet{' '}
+                  <span className="serif">the whole Mistral docs.</span>
+                </h2>
+                <p className="lede">
+                  Paste the URL into any MCP-compatible client. Your agent gets
+                  instant access to every page Mistral publishes in{' '}
+                  <code style={{ fontFamily: 'var(--mono)', fontSize: 13.5, color: 'var(--ink)' }}>
+                    llms-full.txt
+                  </code>
+                  , verbatim. No key, no install, no glue code.
+                </p>
 
-            <div className="platforms">
-              {platforms.map((p) => (
-                <PlatformCard key={p.name} {...p} />
-              ))}
+                <ul className="feature-list">
+                  <li>
+                    <span className="mark"><CheckIcon /></span>
+                    <div>
+                      <b>Accurate.</b>
+                      <p>Mistral&rsquo;s own docs text, never paraphrased.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span className="mark"><CheckIcon /></span>
+                    <div>
+                      <b>Fast.</b>
+                      <p>Index baked into the deploy, loaded in memory. Sub-second responses.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span className="mark"><CheckIcon /></span>
+                    <div>
+                      <b>Fresh.</b>
+                      <p>Cron checks the upstream ETag every six hours and rebuilds on change.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span className="mark"><CheckIcon /></span>
+                    <div>
+                      <b>Two tools.</b>
+                      <p>
+                        <code style={{ fontFamily: 'var(--mono)', fontSize: 12.5, color: 'var(--ink-soft)' }}>search_mistral_docs</code>{' '}
+                        for concepts,{' '}
+                        <code style={{ fontFamily: 'var(--mono)', fontSize: 12.5, color: 'var(--ink-soft)' }}>query_mistral_docs_filesystem</code>{' '}
+                        for exact-match grep.
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <ClientTabs tabs={clientTabs} />
+              </div>
             </div>
           </div>
         </section>
@@ -303,14 +286,14 @@ export default function Page() {
               <span className="serif">that force a retrieval.</span>
             </h2>
             <p className="lede">
-              Ask these verbatim. Don&rsquo;t mention the MCP, a well-wired
-              client reaches for it on its own.
+              Ask these verbatim in any wired-up client. Don&rsquo;t mention the
+              MCP, a well-configured agent reaches for it on its own.
             </p>
 
             <ul className="queries">
               {queries.map((q, i) => (
                 <li key={i} className="query">
-                  <p className="q-body">&ldquo;{q.q}&rdquo;</p>
+                  <p className="q-body">{q.q}</p>
                   <div className="q-note">
                     <span className="tool">{q.tool}</span> · {q.note}
                   </div>
@@ -318,7 +301,7 @@ export default function Page() {
               ))}
             </ul>
 
-            <div className="video-wrap" style={{ marginTop: 28 }}>
+            <div className="video-wrap">
               <div className="video-head">
                 <span>demo.mp4</span>
                 <span>01:00</span>
