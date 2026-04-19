@@ -94,6 +94,14 @@ main.main { flex: 1; }
 }
 .topbar-links a { display: inline-flex; align-items: center; gap: 6px; transition: color .15s; }
 .topbar-links a:hover { color: var(--ink); }
+.nav-text {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+@media (max-width: 720px) {
+  .topbar-links .hide-sm { display: none; }
+}
 .star-btn {
   display: inline-flex;
   align-items: center;

@@ -112,10 +112,10 @@ const clientTabs: ClientTab[] = [
 
 const queries: string[] = [
   'Show me every API endpoint that accepts a response_format parameter.',
-  'Compare Codestral and Devstral: what are the exact model IDs and when should I use each?',
-  'What is Voxtral? Which audio formats does it accept, and what languages does it support?',
-  'Give me the exact JSONL dataset format for fine-tuning a sentiment classifier with Classifier Factory.',
-  'Which of Mistral\u2019s connectors (code interpreter, websearch, image generation, document library) can I use with Agents via the API?',
+  'What is the exact request and response schema for Mistral\u2019s Document AI annotations endpoint?',
+  'How do Agent Handoffs work? Give me a working code example where one agent delegates to another.',
+  'For each currently available Mistral model, show me the model ID, whether it is open-weight or commercial, and a typical use case.',
+  'Using Mistral\u2019s Python SDK, show me a complete streaming chat completion example with function calling enabled.',
 ];
 
 const GithubIcon = () => (
@@ -142,6 +142,14 @@ export default function Page() {
             <span>Mistral Docs MCP</span>
           </a>
           <nav className="topbar-links" aria-label="Primary">
+            <a
+              href="https://panel-de-chat.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-text hide-sm"
+            >
+              Panel de Chat
+            </a>
             <GithubStarButton />
             <a
               href={REPO_URL}
