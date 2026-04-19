@@ -519,13 +519,13 @@ footer.site-footer {
   font-size: 13px;
 }
 footer .foot-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  flex-wrap: wrap;
+  gap: 16px;
 }
 footer .foot-row .icons {
+  justify-self: start;
   display: inline-flex;
   gap: 14px;
   align-items: center;
@@ -535,6 +535,10 @@ footer .foot-row .icons a {
   display: inline-flex;
 }
 footer .foot-row .icons a:hover { color: var(--ink); }
+footer .foot-row .attr {
+  justify-self: center;
+  text-align: center;
+}
 footer .foot-row .attr a {
   color: var(--ink-mute);
   text-decoration: underline;
@@ -544,6 +548,23 @@ footer .foot-row .attr a {
 footer .foot-row .attr a:hover {
   color: var(--ink);
   text-decoration-color: var(--accent);
+}
+footer .foot-row .disclaimer {
+  justify-self: end;
+  text-align: right;
+}
+@media (max-width: 720px) {
+  footer .foot-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    text-align: center;
+  }
+  footer .foot-row .icons,
+  footer .foot-row .attr,
+  footer .foot-row .disclaimer {
+    justify-self: center;
+    text-align: center;
+  }
 }
 
 /* ---------- Focus ---------- */
