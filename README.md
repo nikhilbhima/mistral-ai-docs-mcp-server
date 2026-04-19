@@ -38,9 +38,23 @@ claude mcp add --transport http mistral-docs https://mistral-docs-mcp.vercel.app
 
 Settings → Connectors → Add custom connector. URL: `https://mistral-docs-mcp.vercel.app/mcp`.
 
-### Cursor, Windsurf
+### Cursor
 
-Add to `.cursor/mcp.json` (or `mcp_config.json` for Windsurf):
+Add to `.cursor/mcp.json` (project or global):
+
+```json
+{
+  "mcpServers": {
+    "mistral-docs": {
+      "url": "https://mistral-docs-mcp.vercel.app/mcp"
+    }
+  }
+}
+```
+
+### Windsurf
+
+Add to `mcp_config.json`:
 
 ```json
 {
@@ -79,7 +93,7 @@ Add to `~/.gemini/settings.json`:
 
 ### Zed
 
-Add to `settings.json`:
+Add to `settings.json` under `context_servers`:
 
 ```json
 {
@@ -90,6 +104,23 @@ Add to `settings.json`:
   }
 }
 ```
+
+### Mistral Le Chat
+
+Settings → Custom connectors → Add. URL: `https://mistral-docs-mcp.vercel.app/mcp`, auth: none.
+
+### Mistral Vibe
+
+Edit `~/.vibe/config.toml`:
+
+```toml
+[[mcp_servers]]
+name = "mistral-docs"
+transport = "http"
+url = "https://mistral-docs-mcp.vercel.app/mcp"
+```
+
+Restart with `vibe`.
 
 ### ChatGPT
 
