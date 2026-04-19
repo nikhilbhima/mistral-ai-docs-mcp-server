@@ -200,12 +200,6 @@ export default function Page() {
                 </div>
                 <CopyButton value={MCP_URL} label="Copy" />
               </div>
-
-              <div className="hero-meta">
-                <span><b>139</b> pages</span>
-                <span className="sep">·</span>
-                <span>refreshed every <b>6h</b></span>
-              </div>
             </div>
           </div>
         </section>
