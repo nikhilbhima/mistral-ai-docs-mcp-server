@@ -1,6 +1,7 @@
 import type { VirtualFS } from './virtual';
 
 const MAX_OUTPUT = 30_000;
+const MAX_PATTERN_LEN = 200;
 
 export function runCommand(vfs: VirtualFS, raw: string): string {
   const tokens = tokenize(raw);
@@ -38,6 +39,9 @@ function truncate(s: string): string {
 function rg(vfs: VirtualFS, args: string[]): string {
   if (args.length === 0) return 'usage: rg <pattern> [path-prefix]';
   const [pattern, pathPrefix = '/'] = args;
+  if (pattern.length > MAX_PATTERN_LEN) {
+    return `pattern too long (max ${MAX_PATTERN_LEN} chars)`;
+  }
   let re: RegExp;
   try {
     re = new RegExp(pattern);

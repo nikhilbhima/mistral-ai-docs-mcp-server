@@ -112,4 +112,10 @@ describe('runCommand', () => {
     const out = runCommand(vfs, 'rg "Agents intro"');
     expect(out).toContain('/docs/agents/intro.md');
   });
+
+  it('rejects patterns longer than 200 chars (ReDoS safeguard)', () => {
+    const huge = 'a'.repeat(201);
+    const out = runCommand(vfs, `rg ${huge}`);
+    expect(out).toMatch(/pattern too long/);
+  });
 });
