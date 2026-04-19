@@ -1,8 +1,14 @@
-# Mistral Docs MCP
+<p align="center">
+  <img src="public/logo.png" width="96" alt="" />
+</p>
 
-Unofficial, community-maintained MCP server for Mistral AI's developer
-documentation and full API reference. Not endorsed by or affiliated with
-Mistral AI.
+<h1 align="center">Mistral Docs MCP</h1>
+
+<p align="center">
+  Unofficial, community-maintained MCP server for Mistral AI's developer
+  documentation and full API reference. Not endorsed by or affiliated with
+  Mistral AI.
+</p>
 
 Content source: [`docs.mistral.ai/llms-full.txt`](https://docs.mistral.ai/llms-full.txt).
 Refreshed every 6 hours.
