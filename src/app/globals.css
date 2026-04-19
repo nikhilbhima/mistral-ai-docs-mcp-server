@@ -220,7 +220,7 @@ section + section { border-top: 1px solid var(--border); }
 }
 .hero-meta .sep { color: var(--ink-whisper); }
 
-/* URL card — orange outline */
+/* URL card, orange outline */
 .url-card {
   display: grid;
   grid-template-columns: 1fr auto;
