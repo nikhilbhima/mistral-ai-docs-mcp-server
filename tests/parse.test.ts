@@ -70,4 +70,38 @@ describe('parsePages', () => {
     expect(pages[0].content).toContain('Trailing paragraph');
     expect(pages[1].title).toBe('Next Real Page');
   });
+
+  it('parses bracket-format docs titles', () => {
+    const bracketDoc = [
+      '[Agents Introduction]',
+      'Source: https://docs.mistral.ai/docs/agents/agents_introduction',
+      '',
+      'AI agents autonomously execute tasks using LLMs.',
+    ].join('\n');
+    const pages = parsePages(bracketDoc);
+    expect(pages).toHaveLength(1);
+    expect(pages[0].title).toBe('Agents Introduction');
+    expect(pages[0].category).toBe('docs');
+    expect(pages[0].content).toContain('AI agents');
+  });
+
+  it('handles mixed # and [bracket] titles in the same document', () => {
+    const mixed = [
+      '# API Endpoint',
+      'Source: https://docs.mistral.ai/api/#tag/foo',
+      '',
+      'post /v1/foo',
+      '',
+      '[Docs Page]',
+      'Source: https://docs.mistral.ai/docs/bar',
+      '',
+      'Doc body here.',
+    ].join('\n');
+    const pages = parsePages(mixed);
+    expect(pages).toHaveLength(2);
+    expect(pages[0].title).toBe('API Endpoint');
+    expect(pages[0].category).toBe('api');
+    expect(pages[1].title).toBe('Docs Page');
+    expect(pages[1].category).toBe('docs');
+  });
 });

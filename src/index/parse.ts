@@ -6,12 +6,24 @@ export interface Page {
   category: 'docs' | 'api';
 }
 
+function readTitle(line: string): string | null {
+  if (line.startsWith('# ')) {
+    const t = line.slice(2).trim();
+    return t || null;
+  }
+  if (line.startsWith('[') && line.endsWith(']')) {
+    const t = line.slice(1, -1).trim();
+    return t || null;
+  }
+  return null;
+}
+
 export function parsePages(raw: string): Page[] {
   const lines = raw.split('\n');
   const pages: Page[] = [];
 
   const isPageBoundary = (i: number): boolean => {
-    if (!lines[i]?.startsWith('# ')) return false;
+    if (!readTitle(lines[i] ?? '')) return false;
     let j = i + 1;
     while (j < lines.length && lines[j].trim() === '') j++;
     return j < lines.length && lines[j].startsWith('Source: ');
@@ -19,8 +31,7 @@ export function parsePages(raw: string): Page[] {
 
   for (let i = 0; i < lines.length; i++) {
     if (!isPageBoundary(i)) continue;
-
-    const title = lines[i].slice(2).trim();
+    const title = readTitle(lines[i]);
     if (!title) continue;
 
     let j = i + 1;
