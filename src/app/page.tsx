@@ -111,7 +111,7 @@ const clientTabs: ClientTab[] = [
 ];
 
 const queries: string[] = [
-  'Show me every API endpoint that accepts a response_format parameter.',
+  'What connectors can I use with Mistral Agents, and what does each one do?',
   'What is the exact request and response schema for Mistral\u2019s Document AI annotations endpoint?',
   'How do Agent Handoffs work? Give me a working code example where one agent delegates to another.',
   'For each currently available Mistral model, show me the model ID, whether it is open-weight or commercial, and a typical use case.',
