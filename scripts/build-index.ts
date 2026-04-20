@@ -1,6 +1,6 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parsePages } from '../src/index/parse';
 import { buildSearchIndex } from '../src/index/build';
 
@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(__dirname, '../src/generated/docs-index.json');
 const UPSTREAM = process.env.UPSTREAM_URL ?? 'https://docs.mistral.ai/llms-full.txt';
 
-async function main() {
+export async function buildIndex(): Promise<void> {
   console.log(`[build-index] fetching ${UPSTREAM}`);
   const started = Date.now();
   const res = await fetch(UPSTREAM);
@@ -31,7 +31,10 @@ async function main() {
   console.log(`[build-index] wrote ${pages.length} pages to ${OUT} in ${Date.now() - started}ms`);
 }
 
-main().catch((err) => {
-  console.error('[build-index] FAILED:', err);
-  process.exit(1);
-});
+const isMain = import.meta.url === pathToFileURL(process.argv[1] ?? '').href;
+if (isMain) {
+  buildIndex().catch((err) => {
+    console.error('[build-index] FAILED:', err);
+    process.exit(1);
+  });
+}

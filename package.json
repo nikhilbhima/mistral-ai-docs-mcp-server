@@ -4,6 +4,9 @@
   "private": false,
   "license": "MIT",
   "description": "Unofficial MCP server for Mistral AI docs",
+  "engines": {
+    "node": ">=18.18"
+  },
   "scripts": {
     "build:index": "tsx scripts/build-index.ts",
     "prebuild": "tsx scripts/build-index.ts",

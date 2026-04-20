@@ -36,6 +36,10 @@ name = "mistral-docs"
 transport = "http"
 url = "${MCP_URL}"`;
 
+const LOCAL_RUN = `git clone ${REPO_URL}
+cd mistral-ai-docs-mcp-server
+npm install && npm run build && npm start`;
+
 const clientTabs: ClientTab[] = [
   {
     id: 'claude-code',
@@ -194,6 +198,25 @@ export default function Page() {
               Exact snippet for each of the common ones.
             </p>
             <ClientTabs tabs={clientTabs} />
+          </div>
+        </section>
+
+        {/* ---------- Run locally ---------- */}
+        <section id="local">
+          <div className="wrap">
+            <div className="kicker">Run locally</div>
+            <h2 className="section-h">Or run the whole thing on your machine.</h2>
+            <p className="lede">
+              Clone, install, build, start. Then point your client at the
+              localhost URL instead of the Vercel one.
+            </p>
+            <div className="code code-wide">
+              <pre>{LOCAL_RUN}</pre>
+              <CopyButton value={LOCAL_RUN} />
+            </div>
+            <p className="lede">
+              Server runs on http://localhost:3000/mcp. Needs Node 18.18 or newer.
+            </p>
           </div>
         </section>
 
