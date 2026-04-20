@@ -142,14 +142,6 @@ export default function Page() {
             <span>Mistral Docs MCP</span>
           </a>
           <nav className="topbar-links" aria-label="Primary">
-            <a
-              href="https://panel-de-chat.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-text hide-sm"
-            >
-              Panel de Chat
-            </a>
             <GithubStarButton />
             <a
               href={REPO_URL}
@@ -234,39 +226,50 @@ export default function Page() {
 
       {/* ---------- Footer ---------- */}
       <footer className="site-footer">
-        <div className="wrap foot-row">
-          <div className="icons">
+        <div className="wrap">
+          <div className="foot-links">
             <a
-              href="https://x.com/nikhilbhima"
+              href="https://panel-de-chat.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="X (Twitter)"
             >
-              <XIcon />
-            </a>
-            <a
-              href={REPO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub repository"
-            >
-              <GithubIcon />
+              Panel de Chat
             </a>
           </div>
-          <div className="attr">
-            Built by{' '}
-            <a
-              href="https://x.com/nikhilbhima"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              @nikhilbhima
-            </a>{' '}
-            for the Mistral AI community{' '}
-            <span aria-hidden="true">🧡</span>
-          </div>
-          <div className="disclaimer">
-            Unofficial. Not affiliated with Mistral AI.
+          <div className="foot-row">
+            <div className="icons">
+              <a
+                href="https://x.com/nikhilbhima"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (Twitter)"
+              >
+                <XIcon />
+              </a>
+              <a
+                href={REPO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub repository"
+              >
+                <GithubIcon />
+              </a>
+            </div>
+            <div className="attr">
+              Built by{' '}
+              <a
+                href="https://x.com/nikhilbhima"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                @nikhilbhima
+              </a>{' '}
+              for the Mistral AI community{' '}
+              <span aria-hidden="true">🧡</span>
+            </div>
+            <div className="disclaimer">
+              Unofficial. Not affiliated with Mistral AI.
+            </div>
           </div>
         </div>
       </footer>
