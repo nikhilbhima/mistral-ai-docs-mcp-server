@@ -130,6 +130,16 @@ Developer mode → Connectors → Create → URL `https://mistral-docs-mcp.verce
 
 No analytics. No query logging. Vercel's built-in request logs only.
 
+## Run locally
+
+```bash
+git clone https://github.com/nikhilbhima/mistral-ai-docs-mcp-server
+cd mistral-ai-docs-mcp-server
+npm install && npm run build && npm start
+```
+
+Point your MCP client at `http://localhost:3000/mcp`.
+
 ## Self-host
 
 Fork this repo and deploy to Vercel. Set two environment variables:

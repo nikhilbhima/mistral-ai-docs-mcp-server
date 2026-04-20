@@ -5,7 +5,10 @@
   "license": "MIT",
   "description": "Unofficial MCP server for Mistral AI docs",
   "scripts": {
+    "build:index": "tsx scripts/build-index.ts",
     "prebuild": "tsx scripts/build-index.ts",
+    "predev": "tsx scripts/ensure-index.ts",
+    "prestart": "tsx scripts/ensure-index.ts",
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
