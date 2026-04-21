@@ -108,8 +108,7 @@ main.main { flex: 1; }
   .brand span { font-size: 14px; }
 }
 @media (max-width: 400px) {
-  .star-btn .star-count { display: none; }
-  .star-btn { padding: 8px; }
+  .star-btn { padding: 8px 10px; }
   .brand img { width: 24px; height: 24px; }
 }
 .star-btn {
