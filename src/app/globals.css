@@ -145,7 +145,7 @@ main.main { flex: 1; }
   margin: 0 2px;
 }
 .star-btn .star-count {
-  color: var(--ink-dim);
+  color: var(--accent);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
